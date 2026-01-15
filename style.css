@@ -1,0 +1,87 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Montserrat", sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #fafdff;
+  color: #00417a;
+}
+
+h1 {
+  margin: 20px 0 0 0;
+}
+
+.search-container {
+  padding: 0px 100px;
+  border-radius: 10px;
+  background-color: #ebf7ff;
+}
+
+#search-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 500px;
+  gap: 20px;
+}
+
+#country-search {
+  border: none;
+  font-size: 18px;
+  text-align: center;
+  padding: 10px;
+}
+
+#country-search:focus {
+  border: none;
+}
+
+#btn-search {
+  border: none;
+  background-color: #00417a;
+  color: #fafdff;
+  cursor: pointer;
+  padding: 10px 30px;
+  border-radius: 5px;
+  transition: color 0.3s, background-color 0.3s;
+}
+
+#btn-search:hover {
+  background-color: #fafdff;
+  color: #00417a;
+}
+
+.search-result {
+  max-height: 500px;
+  overflow: scroll;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.country-box {
+  list-style-type: none;
+  background-color: #fff;
+  width: 500px;
+  display: flex;
+  align-items: center;
+  padding: 0px 30px;
+  gap: 80px;
+}
+
+.country-box img {
+  width: 100px;
+}
+
+.result-number {
+  margin: 0;
+}
+
+.error-message {
+  color: red;
+}
