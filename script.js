@@ -2,29 +2,36 @@ input = document.querySelector("#country-search");
 button = document.querySelector("#btn-search");
 searchResult = document.querySelector(".search-result");
 searchForm = document.querySelector("#search-form");
+allCountriesButton = document.querySelector(".all-countries-btn");
+loadingButton = document.querySelector(".loading-btn");
 
-// let countries = [];
-// async function getAllCountriesByName() {
-//   const url =
-//     "https://restcountries.com/v3.1/all?fields=name,capital,population";
+async function getAllCountries() {
+  let loading = true;
+  loadingButton.classList.remove("hidden");
+  const url =
+    "https://restcountries.com/v3.1/all?fields=name,capital,population,currencies,flags";
 
-//   try {
-//     const response = await fetch(url);
-//     if (!response.ok) {
-//       throw new Error(`Response error with status: ${response.status}`);
-//     }
+  try {
+    const response = await fetch(url);
+    if (!response.ok) {
+      throw new Error(`Response error with status: ${response.status}`);
+    }
 
-//     countries = await response.json();
-//     console.log(countries);
-//   } catch (error) {
-//     console.error(error);
-//   }
-// }
-// document.addEventListener("DOMContentLoaded", () => {
-//   getAllCountriesByName();
-// });
+    countries = await response.json();
+    loadingButton.classList.add("hidden");
 
-async function getCountryByName(countryName) {
+    await displayCountries(countries);
+  } catch (error) {
+    console.error(error);
+  } finally {
+    loading = false;
+  }
+}
+
+async function getCountriesByName(countryName) {
+  let loading = true;
+  loadingButton.classList.remove("hidden");
+
   const url = `https://restcountries.com/v3.1/name/${countryName}`;
   try {
     const response = await fetch(url);
@@ -36,36 +43,99 @@ async function getCountryByName(countryName) {
         throw new Error(`Server error, please try again later!`);
       }
     }
-    const country = await response.json();
-    displayCountry(country);
+
+    const countries = await response.json();
+    loadingButton.classList.add("hidden");
+
+    await displayCountries(countries);
   } catch (error) {
     console.error(error);
+  } finally {
+    loading = false;
   }
 }
 
-searchForm.addEventListener("submit", (e) => {
+allCountriesButton.addEventListener("click", (e) => {
   e.preventDefault();
-
-  searchedCountry = input.value.toLowerCase();
-  getCountryByName(searchedCountry);
+  searchResult.innerHTML = "";
+  getAllCountries();
 });
 
-const displayCountry = (countries) => {
+searchForm.addEventListener("submit", (e) => {
+  e.preventDefault();
+  searchResult.innerHTML = "";
+  searchedCountry = input.value.toLowerCase();
+  getCountriesByName(searchedCountry);
+});
+
+const displayCountries = async (countries) => {
   searchResult.innerHTML = `
-  <h3 class = "result-number">Number of results: ${countries.length}</h3>
-  <ul class = "country-list"></ul>`;
-  console.log(countries);
-  countries.forEach(
-    (country) =>
-      (searchResult.innerHTML += `
+  <h3 class = "result-number">Number of results: ${countries.length}</h3>`;
+
+  await createHTML(countries);
+};
+
+const createHTML = async (countries) => {
+  let count = 20;
+
+  for (const country of countries) {
+    searchResult.innerHTML += `
         <li class = "country-box">
+          <button type="button" class="fav-btn" data-name="${
+            country.name.common
+          }">☆</button>
           <img src = "${country.flags.png}" alt = ${country.flags.alt}>
           <div class = "country-details">
-            <p>Name: ${country.name.common}<p/>
-            <p>Capital: ${country.capital}</p>
-            <p>Main Currency: ${Object.values(country.currencies)[0].name}</p>
-            <p>Population: ${country.population}</p>
+            <p class = "country-name"><strong>Name:</strong> ${
+              country.name.common
+            }<p/>
+            <p><strong>Capital:</strong> ${country.capital}</p>
+            <p><strong>Main Currency:</strong> ${
+              Object?.values(country?.currencies)[0]?.name ||
+              "No currency found"
+            }</p>
+            <p><strong>Population:</strong> ${country.population}</p>
           </div>
-        </li>`)
-  );
+        </li>`;
+
+    count++;
+
+    if (count % 20 === 0) {
+      await new Promise((resolve) => setTimeout(resolve, 0));
+    }
+  }
+
+  // countries.forEach(
+  //   (country) =>
+  //     (searchResult.innerHTML += `
+  //       <li class = "country-box">
+  //         <button type="button" class="fav-btn" data-name="${
+  //           country.name.common
+  //         }">☆</button>
+  //         <img src = "${country.flags.png}" alt = ${country.flags.alt}>
+  //         <div class = "country-details">
+  //           <p class = "country-name"><strong>Name:</strong> ${
+  //             country.name.common
+  //           }<p/>
+  //           <p><strong>Capital:</strong> ${country.capital}</p>
+  //           <p><strong>Main Currency:</strong> ${
+  //             Object.values(country?.currencies)[0]?.name
+  //           }</p>
+  //           <p><strong>Population:</strong> ${country.population}</p>
+  //         </div>
+  //       </li>`)
+  // );
 };
+
+searchResult.addEventListener("click", (e) => {
+  const favouriteButton = e.target.closest(".fav-btn");
+
+  if (favouriteButton) {
+    const countryName = favouriteButton.dataset?.name;
+    if (favouriteButton?.innerText === "☆") {
+      favouriteButton.innerText = "⭐️";
+    } else {
+      favouriteButton.innerText = "☆";
+    }
+  }
+});
