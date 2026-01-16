@@ -22,7 +22,13 @@
           >Please search for a country:
         </label>
         <input type="text" name="country-search" id="country-search" />
-        <button id="btn-search">Search</button>
+        <div class="button-box">
+          <button id="btn-search">Search</button>
+          <button type="button" class="all-countries-btn">
+            See All Countries
+          </button>
+        </div>
+        <div class="loading-btn hidden"></div>
         <ul class="search-result"></ul>
       </form>
     </main>
