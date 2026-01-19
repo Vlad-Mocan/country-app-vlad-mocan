@@ -3,7 +3,8 @@ import { isFavourite } from "./favourites.js";
 
 export const displayCountries = async (countries) => {
   searchResult.innerHTML = `
-  <h3 class = "result-number">Number of results: ${countries.length}</h3>`;
+  <p class = "result-number"><strong>NUMBER OF RESULTS: ${countries.length}</strong></p>`;
+
   let count = 20;
 
   for (const country of countries) {

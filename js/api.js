@@ -1,10 +1,18 @@
 import { displayCountries } from "./ui.js";
-import { allCountriesButton, searchResult, loadingButton } from "./dom.js";
+import {
+  allCountriesButton,
+  searchResult,
+  loadingButton,
+  searchButton,
+} from "./dom.js";
+
+import { saveArrayToLocalStorage } from "./storage.js";
 
 export async function getAllCountries() {
   let loading = true;
   loadingButton.classList.remove("hidden");
   allCountriesButton.disabled = true;
+
   const url =
     "https://restcountries.com/v3.1/all?fields=name,capital,population,currencies,flags";
 
@@ -31,7 +39,10 @@ export async function getCountriesByName(countryName) {
   loadingButton.classList.remove("hidden");
   searchButton.disabled = true;
 
+  saveArrayToLocalStorage("history", countryName);
+
   const url = `https://restcountries.com/v3.1/name/${countryName}`;
+
   try {
     const response = await fetch(url);
     if (!response.ok) {

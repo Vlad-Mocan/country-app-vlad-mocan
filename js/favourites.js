@@ -1,4 +1,5 @@
 import { searchResult } from "./dom.js";
+import { saveArrayToLocalStorage } from "./storage.js";
 
 export const isFavourite = (countryName) => {
   if (localStorage.getItem("favourite-countries")) {
@@ -15,30 +16,8 @@ searchResult.addEventListener("click", (e) => {
   const favouriteButton = e.target.closest(".fav-btn");
 
   if (favouriteButton) {
-    const countryName = favouriteButton.dataset?.name;
-    if (localStorage.getItem("favourite-countries")) {
-      const favouriteCountries = localStorage.getItem("favourite-countries");
-      const favouriteCountriesParsed = JSON.parse(favouriteCountries);
-      if (favouriteCountriesParsed.includes(countryName)) {
-        const result = favouriteCountriesParsed.filter(
-          (country) => country !== countryName
-        );
-        localStorage.setItem("favourite-countries", JSON.stringify(result));
-      } else {
-        favouriteCountriesParsed.push(countryName);
-        localStorage.setItem(
-          "favourite-countries",
-          JSON.stringify(favouriteCountriesParsed)
-        );
-      }
-    } else {
-      const newFavouriteCountry = [countryName];
-      localStorage.setItem(
-        "favourite-countries",
-        JSON.stringify(newFavouriteCountry)
-      );
-    }
-
+    const countryName = favouriteButton.dataset?.name.toLowerCase();
+    saveArrayToLocalStorage("favourite-countries", countryName);
     if (favouriteButton?.innerText === "☆") {
       favouriteButton.innerText = "⭐️";
     } else {
