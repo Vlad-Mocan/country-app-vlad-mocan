@@ -16,7 +16,7 @@ h1 {
 }
 
 .search-container {
-  padding: 0px 100px;
+  padding: 30px 100px 0px 100px;
   border-radius: 10px;
   background-color: #ebf7ff;
   position: relative;
@@ -152,4 +152,25 @@ h1 {
 button:disabled {
   opacity: 0.5;
   cursor: not-allowed;
+}
+
+.navigation-box {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.nav-item {
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+.nav-item:hover {
+  color: #1b75b0;
+}
+
+.nav-item.active {
+  font-size: 2rem;
+  color: #1b75b0;
 }
