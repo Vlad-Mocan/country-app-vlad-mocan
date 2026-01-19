@@ -43,7 +43,7 @@ h1 {
 }
 
 #btn-search {
-  border: none;
+  border: 0.1px solid #00417a;
   background-color: #00417a;
   color: #fafdff;
   cursor: pointer;
@@ -147,4 +147,9 @@ h1 {
 
 .hidden {
   display: none;
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
