@@ -1,5 +1,5 @@
 input = document.querySelector("#country-search");
-button = document.querySelector("#btn-search");
+searchButton = document.querySelector("#btn-search");
 searchResult = document.querySelector(".search-result");
 searchForm = document.querySelector("#search-form");
 allCountriesButton = document.querySelector(".all-countries-btn");
@@ -8,6 +8,7 @@ loadingButton = document.querySelector(".loading-btn");
 async function getAllCountries() {
   let loading = true;
   loadingButton.classList.remove("hidden");
+  allCountriesButton.disabled = true;
   const url =
     "https://restcountries.com/v3.1/all?fields=name,capital,population,currencies,flags";
 
@@ -25,12 +26,14 @@ async function getAllCountries() {
     console.error(error);
   } finally {
     loading = false;
+    allCountriesButton.disabled = false;
   }
 }
 
 async function getCountriesByName(countryName) {
   let loading = true;
   loadingButton.classList.remove("hidden");
+  searchButton.disabled = true;
 
   const url = `https://restcountries.com/v3.1/name/${countryName}`;
   try {
@@ -52,6 +55,7 @@ async function getCountriesByName(countryName) {
     console.error(error);
   } finally {
     loading = false;
+    searchButton.disabled = false;
   }
 }
 
@@ -79,11 +83,16 @@ const createHTML = async (countries) => {
   let count = 20;
 
   for (const country of countries) {
+    const favourited = isFavourite(country);
+
+    console.log(favourited);
     searchResult.innerHTML += `
         <li class = "country-box">
           <button type="button" class="fav-btn" data-name="${
             country.name.common
-          }">☆</button>
+          }">
+            ${favourited ? "⭐️" : "☆"}
+          </button>
           <img src = "${country.flags.png}" alt = ${country.flags.alt}>
           <div class = "country-details">
             <p class = "country-name"><strong>Name:</strong> ${
@@ -104,27 +113,17 @@ const createHTML = async (countries) => {
       await new Promise((resolve) => setTimeout(resolve, 0));
     }
   }
+};
 
-  // countries.forEach(
-  //   (country) =>
-  //     (searchResult.innerHTML += `
-  //       <li class = "country-box">
-  //         <button type="button" class="fav-btn" data-name="${
-  //           country.name.common
-  //         }">☆</button>
-  //         <img src = "${country.flags.png}" alt = ${country.flags.alt}>
-  //         <div class = "country-details">
-  //           <p class = "country-name"><strong>Name:</strong> ${
-  //             country.name.common
-  //           }<p/>
-  //           <p><strong>Capital:</strong> ${country.capital}</p>
-  //           <p><strong>Main Currency:</strong> ${
-  //             Object.values(country?.currencies)[0]?.name
-  //           }</p>
-  //           <p><strong>Population:</strong> ${country.population}</p>
-  //         </div>
-  //       </li>`)
-  // );
+const isFavourite = (countryName) => {
+  if (localStorage.getItem("favourite-countries")) {
+    const favouriteCountries = localStorage.getItem("favourite-countries");
+    const favouriteCountriesParsed = JSON.parse(favouriteCountries);
+    if (favouriteCountriesParsed.includes(countryName)) {
+      return true;
+    }
+    return false;
+  }
 };
 
 searchResult.addEventListener("click", (e) => {
@@ -132,6 +131,29 @@ searchResult.addEventListener("click", (e) => {
 
   if (favouriteButton) {
     const countryName = favouriteButton.dataset?.name;
+    if (localStorage.getItem("favourite-countries")) {
+      const favouriteCountries = localStorage.getItem("favourite-countries");
+      const favouriteCountriesParsed = JSON.parse(favouriteCountries);
+      if (favouriteCountriesParsed.includes(countryName)) {
+        const result = favouriteCountriesParsed.filter(
+          (country) => country !== countryName
+        );
+        localStorage.setItem("favourite-countries", JSON.stringify(result));
+      } else {
+        favouriteCountriesParsed.push(countryName);
+        localStorage.setItem(
+          "favourite-countries",
+          JSON.stringify(favouriteCountriesParsed)
+        );
+      }
+    } else {
+      const newFavouriteCountry = [countryName];
+      localStorage.setItem(
+        "favourite-countries",
+        JSON.stringify(newFavouriteCountry)
+      );
+    }
+
     if (favouriteButton?.innerText === "☆") {
       favouriteButton.innerText = "⭐️";
     } else {
