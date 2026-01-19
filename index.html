@@ -2,7 +2,7 @@
   <head>
     <title>Country Search</title>
     <link href="./style.css" rel="stylesheet" />
-    <script src="./script.js" defer></script>
+    <script src="./js/main.js" type="module" defer></script>
     <link rel="shortcut icon" type="image/png" href="./map.png" />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -15,8 +15,12 @@
 
   <body>
     <main class="search-container">
+      <nav class="navigation-box">
+        <a class="nav-item">History</a>
+        <a class="nav-item active">COUNTRY SEARCH</a>
+        <a class="nav-item">Favourites</a>
+      </nav>
       <form id="search-form">
-        <h1>COUNTRY SEARCH</h1>
         <label id="search-label" for="country-search"
           >Please search for a country:
         </label>
