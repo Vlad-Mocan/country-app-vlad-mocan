@@ -2,9 +2,9 @@
   <head>
     <title>Country Search</title>
     <link href="./style.css" rel="stylesheet" />
-    <script src="./js/main.js" type="module" defer></script>
+    <script src="./js/main.js" type="module"></script>
     <link rel="shortcut icon" type="image/png" href="./map.png" />
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -14,26 +14,37 @@
   </head>
 
   <body>
-    <main class="search-container">
+    <header>
       <nav class="navigation-box">
-        <a class="nav-item">History</a>
-        <a class="nav-item active">COUNTRY SEARCH</a>
-        <a class="nav-item">Favourites</a>
+        <ul class="navigation-list">
+          <li><a href="#history" class="nav-item">HISTORY</a></li>
+          <li><a href="#search" class="nav-item active">COUNTRY SEARCH</a></li>
+          <li><a href="#favourites" class="nav-item">FAVOURITES</a></li>
+        </ul>
       </nav>
-      <form id="search-form">
-        <label id="search-label" for="country-search"
-          >Please search for a country:
-        </label>
-        <input type="text" name="country-search" id="country-search" />
-        <div class="button-box">
-          <button id="btn-search">Search</button>
-          <button type="button" class="all-countries-btn">
-            See All Countries
-          </button>
-        </div>
-        <div class="loading-btn hidden"></div>
-        <ul class="search-result"></ul>
-      </form>
+    </header>
+
+    <main class="search-container">
+      <section id="history" class="page-section">History</section>
+
+      <section id="search" class="page-section active">
+        <form id="search-form">
+          <label class="search-label" for="country-search"
+            >PLEASE SEARCH FOR A COUNTRY:
+          </label>
+          <input type="text" name="country-search" id="country-search" />
+          <div class="button-box">
+            <button id="btn-search">SEARCH</button>
+            <button type="button" class="all-countries-btn">
+              SEE ALL COUNTRIES
+            </button>
+          </div>
+          <div class="loading-btn hidden"></div>
+          <ul class="search-result"></ul>
+        </form>
+      </section>
+
+      <section id="favourites" class="page-section">Favourites</section>
     </main>
   </body>
 </html>

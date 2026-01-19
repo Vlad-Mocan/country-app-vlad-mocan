@@ -5,3 +5,4 @@ export const searchForm = document.querySelector("#search-form");
 export const allCountriesButton = document.querySelector(".all-countries-btn");
 export const navElements = document.querySelectorAll(".nav-item");
 export const loadingButton = document.querySelector(".loading-btn");
+export const sections = document.querySelectorAll(".page-section");
