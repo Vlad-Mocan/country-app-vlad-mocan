@@ -19,12 +19,16 @@
         <ul class="navigation-list">
           <li><a href="#history" class="nav-item">HISTORY</a></li>
           <li><a href="#search" class="nav-item active">COUNTRY SEARCH</a></li>
-          <li><a href="#favourites" class="nav-item">FAVOURITES</a></li>
+          <li>
+            <a href="#favourites" class="nav-item" id="favourites-nav"
+              >FAVOURITES</a
+            >
+          </li>
         </ul>
       </nav>
     </header>
 
-    <main class="search-container">
+    <main class="container">
       <section id="history" class="page-section">History</section>
 
       <section id="search" class="page-section active">
@@ -44,7 +48,11 @@
         </form>
       </section>
 
-      <section id="favourites" class="page-section">Favourites</section>
+      <section id="favourites" class="page-section">
+        <p class="favourite-paragraph"></p>
+        <ul class="flags-grid"></ul>
+        <div class="loading-btn hidden" id="favourites-loading"></div>
+      </section>
     </main>
   </body>
 </html>

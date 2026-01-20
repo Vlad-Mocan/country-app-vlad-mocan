@@ -1,4 +1,4 @@
-import { searchResult } from "./dom.js";
+import { searchResult, favouriteCountriesGrid } from "./dom.js";
 import { isFavourite } from "./favourites.js";
 
 export const displayCountries = async (countries) => {
@@ -10,12 +10,9 @@ export const displayCountries = async (countries) => {
   for (const country of countries) {
     const favourited = isFavourite(country);
 
-    console.log(favourited);
     searchResult.innerHTML += `
         <li class = "country-box">
-          <button type="button" class="fav-btn" data-name="${
-            country.name.common
-          }">
+          <button type="button" class="fav-btn" data-name="${country?.cca3}">
             ${favourited ? "⭐️" : "☆"}
           </button>
           <img src = "${country.flags.png}" alt = ${country.flags.alt}>
@@ -38,4 +35,13 @@ export const displayCountries = async (countries) => {
       await new Promise((resolve) => setTimeout(resolve, 0));
     }
   }
+};
+
+export const displayFavouriteCountries = (countries) => {
+  countries.forEach((country) => {
+    favouriteCountriesGrid.innerHTML += `<li class = "grid-country">
+    <img class = "grid-country__img"  src="${country.flags.png}" alt = "${country.flags.alt}" />
+    <p>${country.name.common}</p>
+    </li>`;
+  });
 };

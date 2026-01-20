@@ -1,9 +1,10 @@
-import { displayCountries } from "./ui.js";
+import { displayCountries, displayFavouriteCountries } from "./ui.js";
 import {
   allCountriesButton,
   searchResult,
   loadingButton,
   searchButton,
+  favouritesLoading,
 } from "./dom.js";
 
 import { saveArrayToLocalStorage } from "./storage.js";
@@ -14,7 +15,7 @@ export async function getAllCountries() {
   allCountriesButton.disabled = true;
 
   const url =
-    "https://restcountries.com/v3.1/all?fields=name,capital,population,currencies,flags";
+    "https://restcountries.com/v3.1/all?fields=name,capital,population,currencies,flags,cca3";
 
   try {
     const response = await fetch(url);
@@ -28,6 +29,7 @@ export async function getAllCountries() {
     await displayCountries(countries);
   } catch (error) {
     console.error(error);
+    loadingButton.classList.add("hidden");
   } finally {
     loading = false;
     allCountriesButton.disabled = false;
@@ -60,8 +62,31 @@ export async function getCountriesByName(countryName) {
     await displayCountries(countries);
   } catch (error) {
     console.error(error);
+    loadingButton.classList.add("hidden");
   } finally {
     loading = false;
     searchButton.disabled = false;
+  }
+}
+
+export async function getCountriesByCode(countriesCode) {
+  let loading = true;
+  favouritesLoading.classList.remove("hidden");
+  const url = `https://restcountries.com/v3.1/alpha?codes=${countriesCode}`;
+
+  try {
+    const response = await fetch(url);
+    if (!response.ok) {
+      throw new Error(`Could not find countries: ${response.status}`);
+    }
+
+    const countries = await response.json();
+    displayFavouriteCountries(countries);
+    console.log(countries);
+  } catch (error) {
+    console.error(error);
+  } finally {
+    loading = false;
+    favouritesLoading.classList.add("hidden");
   }
 }
