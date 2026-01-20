@@ -1,7 +1,7 @@
 export const saveArrayToLocalStorage = function (storageKey, value) {
   if (localStorage.getItem(storageKey)) {
     const arrayOfValues = JSON.parse(localStorage.getItem(storageKey));
-    if (arrayOfValues.includes(value)) {
+    if (arrayOfValues.includes(value) && storageKey !== "history") {
       const result = arrayOfValues.filter((arrValue) => arrValue !== value);
       localStorage.setItem(storageKey, JSON.stringify(result));
     } else {
