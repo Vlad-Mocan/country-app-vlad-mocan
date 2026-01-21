@@ -12,7 +12,11 @@ import {
   sections,
   favouriteSectionNav,
   favouriteCountriesParagraph,
+  favouriteCountriesGrid,
+  historySectionNav,
+  historyList,
 } from "./dom.js";
+import { displayHistory } from "./ui.js";
 
 navElements.forEach((element) => {
   element.addEventListener("click", (e) => {
@@ -59,5 +63,25 @@ favouriteSectionNav.addEventListener("click", (e) => {
     }
   } else {
     favouriteCountriesParagraph.textContent = "NO FAVOURITE COUNTRIES SAVED";
+  }
+});
+
+favouriteCountriesGrid.addEventListener("click", (e) => {
+  e.preventDefault();
+  const country = e.target.closest(".grid-country");
+  if (country) {
+    e.stopPropagation();
+    console.log("grid item pressed");
+  }
+});
+
+historySectionNav.addEventListener("click", (e) => {
+  e.preventDefault();
+
+  if (localStorage.getItem("history")) {
+    const history = JSON.parse(localStorage.getItem("history"));
+    displayHistory(history);
+  } else {
+    historyList.innerHTML = `<h2>YOUR HISTORY IS EMPTY</h2>`;
   }
 });

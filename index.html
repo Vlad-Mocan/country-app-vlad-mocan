@@ -17,7 +17,9 @@
     <header>
       <nav class="navigation-box">
         <ul class="navigation-list">
-          <li><a href="#history" class="nav-item">HISTORY</a></li>
+          <li>
+            <a href="#history" id="history-nav" class="nav-item">HISTORY</a>
+          </li>
           <li><a href="#search" class="nav-item active">COUNTRY SEARCH</a></li>
           <li>
             <a href="#favourites" class="nav-item" id="favourites-nav"
@@ -29,7 +31,12 @@
     </header>
 
     <main class="container">
-      <section id="history" class="page-section">History</section>
+      <section id="history" class="page-section">
+        <div class="container-history">
+          <h1 class="number-of-entries"></h1>
+          <ul class="history-list"></ul>
+        </div>
+      </section>
 
       <section id="search" class="page-section active">
         <form id="search-form">

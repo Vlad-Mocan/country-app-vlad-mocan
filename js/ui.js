@@ -1,4 +1,9 @@
-import { searchResult, favouriteCountriesGrid } from "./dom.js";
+import {
+  searchResult,
+  favouriteCountriesGrid,
+  historyList,
+  numberOfHistoryEntries,
+} from "./dom.js";
 import { isFavourite } from "./favourites.js";
 
 export const displayCountries = async (countries) => {
@@ -38,10 +43,30 @@ export const displayCountries = async (countries) => {
 };
 
 export const displayFavouriteCountries = (countries) => {
+  favouriteCountriesGrid.innerHTML = ``;
   countries.forEach((country) => {
     favouriteCountriesGrid.innerHTML += `<li class = "grid-country">
     <img class = "grid-country__img"  src="${country.flags.png}" alt = "${country.flags.alt}" />
     <p>${country.name.common}</p>
     </li>`;
+  });
+};
+
+export const displayHistory = (history) => {
+  historyList.innerHTML = ``;
+  if (history.length == 0) {
+    numberOfHistoryEntries.textContent = `YOUR HISTORY IS EMPTY`;
+    return;
+  } else {
+    numberOfHistoryEntries.textContent = `${
+      history.length === 1 ? `1 ENTRY:` : `${history.length} ENTRIES:`
+    }`;
+  }
+
+  console.log(history);
+
+  history.forEach((entry) => {
+    historyList.innerHTML += `
+    <li class = "history-item">${entry}</li>`;
   });
 };
