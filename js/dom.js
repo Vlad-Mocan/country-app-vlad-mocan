@@ -12,3 +12,7 @@ export const favouriteCountriesGrid = document.querySelector(".flags-grid");
 export const favouriteCountriesParagraph = document.querySelector(
   ".favourite-paragraph"
 );
+export const historySectionNav = document.querySelector("#history-nav");
+export const historyList = document.querySelector(".history-list");
+export const numberOfHistoryEntries =
+  document.querySelector(".number-of-entries");
