@@ -1,10 +1,16 @@
-import { displayCountries, displayFavouriteCountries } from "./ui.js";
+import {
+  createCountryDescriptionHTML,
+  displayCountries,
+  displayFavouriteCountries,
+} from "./ui.js";
 import {
   allCountriesButton,
   searchResult,
   loadingButton,
   searchButton,
   favouritesLoading,
+  sidePanel,
+  sidePanelLoading,
 } from "./dom.js";
 
 import { saveArrayToLocalStorage } from "./storage.js";
@@ -88,5 +94,32 @@ export async function getCountriesByCode(countriesCode) {
   } finally {
     loading = false;
     favouritesLoading.classList.add("hidden");
+  }
+}
+
+export async function getInformationAboutCountry(country) {
+  console.log(country, typeof country);
+  let loading = true;
+  sidePanelLoading.classList.remove("hidden");
+
+  sidePanel.innerHTML = ``;
+  sidePanel.classList.add("open");
+
+  const url = `https://en.wikipedia.org/api/rest_v1/page/summary/${country}`;
+
+  try {
+    const response = await fetch(url);
+    if (!response.ok) {
+      throw new Error(
+        `Could not fetch information about country: ${response.status}`
+      );
+    }
+    const information = await response.json();
+    createCountryDescriptionHTML(information);
+    console.log(information);
+  } catch (error) {
+    console.error(error);
+  } finally {
+    sidePanelLoading.classList.add("hidden");
   }
 }

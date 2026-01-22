@@ -1,8 +1,12 @@
+import { getInformationAboutCountry } from "./api.js";
 import {
   searchResult,
   favouriteCountriesGrid,
   historyList,
   numberOfHistoryEntries,
+  closeButton,
+  overlay,
+  sidePanel,
 } from "./dom.js";
 import { isFavourite } from "./favourites.js";
 
@@ -30,7 +34,7 @@ export const displayCountries = async (countries) => {
               Object?.values(country?.currencies)[0]?.name ||
               "No currency found"
             }</p>
-            <p><strong>Population:</strong> ${country.population}</p>
+            <p><strong>Population:</strong> ${country.population.toLocaleString()}</p>
           </div>
         </li>`;
 
@@ -54,6 +58,8 @@ export const displayFavouriteCountries = (countries) => {
 
 export const displayHistory = (history) => {
   historyList.innerHTML = ``;
+  numberOfHistoryEntries.textContent = ``;
+
   if (history.length == 0) {
     numberOfHistoryEntries.textContent = `YOUR HISTORY IS EMPTY`;
     return;
@@ -69,4 +75,60 @@ export const displayHistory = (history) => {
     historyList.innerHTML += `
     <li class = "history-item">${entry}</li>`;
   });
+};
+
+export const displayCountryInformation = (country) => {
+  const rect = country.getBoundingClientRect();
+  const clone = country.cloneNode(true);
+  country.classList.add("invisible");
+
+  clone.classList.add("flying-card");
+
+  clone.style.width = rect.width + "px";
+  clone.style.height = rect.height + "px";
+  clone.style.top = rect.top + "px";
+  clone.style.right = rect.right + "px";
+  clone.style.bottom = rect.bottom + "px";
+  clone.style.left = rect.left + "px";
+  console.log(rect);
+
+  document.body.appendChild(clone);
+
+  overlay.classList.remove("hidden");
+
+  getInformationAboutCountry(country.textContent.trim().toLowerCase());
+
+  requestAnimationFrame(() => {
+    clone.classList.add("active-flying-card");
+  });
+};
+
+export const closeCountryInformation = () => {
+  const clone = document.querySelector(".flying-card");
+  const originalCard = document.querySelector(".invisible");
+
+  if (clone) {
+    clone.classList.remove("active-flying-card");
+    overlay.classList.add("hidden");
+    sidePanel.classList.remove("open");
+    clone.addEventListener(
+      "transitionend",
+      () => {
+        clone.remove();
+        // overlay.classList.add("hidden");
+        if (originalCard) {
+          originalCard.classList.remove("invisible");
+        }
+      },
+      { once: true }
+    );
+  }
+};
+
+export const createCountryDescriptionHTML = (countryInformation) => {
+  const html = `<h1>${countryInformation.title}</h1>
+  <p>${countryInformation.description}</p>
+  ${countryInformation.extract_html}`;
+  sidePanel.innerHTML += html;
+  console.log(sidePanel.innerHTML);
 };

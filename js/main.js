@@ -3,6 +3,7 @@ import {
   getCountriesByName,
   getCountriesByCode,
 } from "./api.js";
+
 import {
   input,
   searchResult,
@@ -15,8 +16,16 @@ import {
   favouriteCountriesGrid,
   historySectionNav,
   historyList,
+  closeButton,
+  overlay,
+  themeButton,
 } from "./dom.js";
-import { displayHistory } from "./ui.js";
+
+import {
+  closeCountryInformation,
+  displayCountryInformation,
+  displayHistory,
+} from "./ui.js";
 
 navElements.forEach((element) => {
   element.addEventListener("click", (e) => {
@@ -71,8 +80,13 @@ favouriteCountriesGrid.addEventListener("click", (e) => {
   const country = e.target.closest(".grid-country");
   if (country) {
     e.stopPropagation();
-    console.log("grid item pressed");
+    displayCountryInformation(country);
   }
+});
+
+closeButton.addEventListener("click", (e) => {
+  e.preventDefault();
+  closeCountryInformation();
 });
 
 historySectionNav.addEventListener("click", (e) => {
@@ -83,5 +97,17 @@ historySectionNav.addEventListener("click", (e) => {
     displayHistory(history);
   } else {
     historyList.innerHTML = `<h2>YOUR HISTORY IS EMPTY</h2>`;
+  }
+});
+
+themeButton.addEventListener("click", (e) => {
+  e.preventDefault();
+
+  document.body.classList.toggle("dark-mode");
+
+  if (document.body.classList.contains("dark-mode")) {
+    themeButton.innerHTML = "☀️";
+  } else {
+    themeButton.innerHTML = "🌙";
   }
 });

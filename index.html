@@ -27,6 +27,7 @@
             >
           </li>
         </ul>
+        <button class="theme-btn">🌙</button>
       </nav>
     </header>
 
@@ -56,10 +57,20 @@
       </section>
 
       <section id="favourites" class="page-section">
-        <p class="favourite-paragraph"></p>
-        <ul class="flags-grid"></ul>
-        <div class="loading-btn hidden" id="favourites-loading"></div>
+        <div class="container-favourites">
+          <p class="favourite-paragraph"></p>
+          <ul class="flags-grid"></ul>
+          <div class="loading-btn hidden" id="favourites-loading"></div>
+        </div>
       </section>
     </main>
+
+    <div class="overlay hidden" id="overlay">
+      <button class="close-btn">X</button>
+    </div>
+
+    <aside class="side-panel">
+      <div class="loading-btn hidden" id="side-panel__loading"></div>
+    </aside>
   </body>
 </html>
