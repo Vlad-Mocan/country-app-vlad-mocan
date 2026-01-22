@@ -16,3 +16,8 @@ export const historySectionNav = document.querySelector("#history-nav");
 export const historyList = document.querySelector(".history-list");
 export const numberOfHistoryEntries =
   document.querySelector(".number-of-entries");
+export const closeButton = document.querySelector(".close-btn");
+export const overlay = document.querySelector(".overlay");
+export const sidePanel = document.querySelector(".side-panel");
+export const sidePanelLoading = document.querySelector("#side-panel__loading");
+export const themeButton = document.querySelector(".theme-btn");
