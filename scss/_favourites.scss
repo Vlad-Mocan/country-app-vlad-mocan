@@ -1,0 +1,149 @@
+#favourites {
+  width: 50%;
+  background-color: transparent;
+}
+
+.favourite-paragraph {
+  font-size: clamp(0.3rem, 2vw, 1rem);
+  font-weight: 700;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.flags-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 2rem;
+  width: 100%;
+  padding: 0.5rem;
+}
+
+.grid-country {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+  max-width: 300px;
+  border: 0.1px solid var(--border);
+  margin-inline: auto;
+
+  cursor: pointer;
+  font-weight: 500;
+  text-align: center;
+
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  transition: box-shadow 0.3s;
+
+  &:hover {
+    box-shadow: var(--shadow-hover);
+  }
+}
+
+.grid-country__img {
+  width: 50%;
+  height: 50%;
+  object-fit: contain;
+}
+
+.overlay {
+  position: fixed;
+  background-color: rgb(0 0 0 / 0.4);
+  z-index: 1000;
+  inset: 0;
+}
+
+.invisible {
+  opacity: 0;
+}
+
+.flying-card {
+  position: fixed;
+  z-index: 1500;
+  background-color: var(--bg-dark);
+  color: var(--text);
+  border-radius: 0.3rem;
+
+  transition: all 0.3s ease;
+  margin: 0;
+}
+
+.active-flying-card {
+  top: 50% !important;
+  left: 25% !important;
+
+  @media (max-width: 1250px) {
+    top: 10% !important;
+    left: 50% !important;
+    transform: translateX(-50%);
+  }
+}
+
+.close-btn {
+  position: absolute;
+  color: var(--text);
+  top: 30px;
+  right: 50px;
+  width: 2rem;
+  height: 2rem;
+  border: none;
+  background-color: var(--bg-light);
+  cursor: pointer;
+
+  border-radius: 50%;
+}
+
+.side-panel {
+  position: fixed;
+  z-index: 1800;
+
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 500px;
+  height: fit-content;
+  max-height: 500px;
+  margin: auto 0;
+
+  overflow: scroll;
+
+  color: var(--text);
+  background-color: var(--bg);
+  padding: 1rem;
+  border-radius: 0.3rem;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+
+  transform: translateX(100%);
+  transition: transform 0.5s ease;
+
+  @media (max-width: 1250px) {
+    top: auto;
+    right: 0;
+    left: 0;
+
+    bottom: 0;
+    width: 100%;
+    transform: translateY(100%);
+  }
+
+  h1 {
+    text-align: center;
+  }
+}
+
+.side-panel.open {
+  right: 10%;
+  transform: translateX(0);
+  @media (max-width: 1250px) {
+    transform: translateY(0);
+  }
+}
+
+#side-panel__loading {
+  z-index: 1900;
+}
