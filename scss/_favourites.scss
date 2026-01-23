@@ -1,3 +1,5 @@
+@use "mixins" as *;
+
 #favourites {
   width: 50%;
   background-color: transparent;
@@ -19,11 +21,8 @@
 }
 
 .grid-country {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 0.5rem;
+  @include flex($dir: column, $gap: 0.5rem);
+
   width: 100%;
   max-width: 300px;
   border: 0.1px solid var(--border);
@@ -113,10 +112,7 @@
   padding: 1rem;
   border-radius: 0.3rem;
 
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1rem;
+  @include flex($dir: column, $justify: flex-start, $gap: 1rem);
 
   transform: translateX(100%);
   transition: transform 0.5s ease;
@@ -134,13 +130,13 @@
   h1 {
     text-align: center;
   }
-}
 
-.side-panel.open {
-  right: 10%;
-  transform: translateX(0);
-  @media (max-width: 1250px) {
-    transform: translateY(0);
+  &.open {
+    right: 10%;
+    transform: translateX(0);
+    @media (max-width: 1250px) {
+      transform: translateY(0);
+    }
   }
 }
 

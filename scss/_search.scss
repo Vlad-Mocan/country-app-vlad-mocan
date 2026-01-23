@@ -1,10 +1,7 @@
-#search-form {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+@use "mixins" as *;
 
-  gap: 20px;
+#search-form {
+  @include flex($dir: column, $gap: 20px);
   padding: 1rem;
 }
 
@@ -25,6 +22,10 @@
   &:focus {
     border: none;
   }
+}
+
+.button-box {
+  @include flex($gap: 1rem);
 }
 
 #btn-search {
@@ -61,33 +62,22 @@
 
 .search-result {
   max-height: 30rem;
-
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-
-  gap: 20px;
-
-  overflow: scroll;
-
+  @include flex($justify: flex-start, $dir: column, $gap: 20px);
   padding-bottom: 1rem;
+  overflow: scroll;
 }
 
 .country-box {
-  position: relative;
-  background-color: var(--bg-light);
-
   width: 80%;
   max-width: auto;
 
+  position: relative;
+  @include flex($justify: flex-start, $gap: 3rem);
+
+  background-color: var(--bg-light);
+
   border: 0.1rem solid var(--highlight);
   box-shadow: var(--shadow);
-
-  display: flex;
-
-  align-items: center;
-
-  gap: 3rem;
 
   padding: 10px 30px;
   border-radius: 1rem;
@@ -114,6 +104,7 @@
     }
   }
 }
+
 .result-number {
   font-size: 1.2rem;
 
@@ -124,13 +115,6 @@
 
 .error-message {
   color: var(--danger);
-}
-
-.button-box {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 1rem;
 }
 
 .fav-btn {

@@ -1,3 +1,5 @@
+@use "mixins" as *;
+
 header {
   position: sticky;
   background-color: var(--bg);
@@ -22,9 +24,7 @@ header {
 .navigation-list {
   grid-column: 2;
 
-  display: flex;
-  align-items: center;
-  gap: 4rem;
+  @include flex($justify: flex-start, $gap: 4rem);
 
   @media (max-width: 768px) {
     gap: 1rem;
